@@ -10,10 +10,12 @@ WORKDIR /app
 COPY pyproject.toml ./
 
 # Install dependencies
-RUN uv venv && uv pip install -r pyproject.toml
+RUN uv venv && \
+    . .venv/bin/activate && \
+    uv pip install -r pyproject.toml
 
 # Copy everything else
 COPY . .
 
 # Entrypoint
-CMD ["python", "main.py"]
+CMD ["uv","run", "main.py"]
